@@ -37,6 +37,7 @@ namespace GestionMusic
         {
             albumController.Guardar(txt_titulo.Text, txt_genero.Text, int.Parse(txt_año.Text), txt_discografia.Text);
             CargarListaAlbumes();
+            LimpiarCampos();
         }
 
         private void btn_editar_Click(object sender, EventArgs e)
@@ -46,6 +47,7 @@ namespace GestionMusic
                 album_id = (int)lst_album.SelectedValue;
                 albumController.Editar(album_id, txt_titulo.Text, txt_genero.Text, int.Parse(txt_año.Text), txt_discografia.Text);
                 CargarListaAlbumes();
+                LimpiarCampos();
             }
             else
             {
@@ -60,6 +62,7 @@ namespace GestionMusic
                 album_id = (int)lst_album.SelectedValue;
                 albumController.Eliminar(album_id);
                 CargarListaAlbumes();
+                LimpiarCampos();
             }
             else
             {
@@ -78,6 +81,7 @@ namespace GestionMusic
             txt_año.Clear();
             txt_discografia.Clear();
         }
+
 
         
     }

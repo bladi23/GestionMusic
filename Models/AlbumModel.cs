@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using GestionMusic.Config;
+using System.Windows.Forms;
 
 namespace GestionMusic.Models
 {
@@ -28,16 +29,29 @@ namespace GestionMusic.Models
             return listaAlbum; }
         public void Guardar(string titulo, string genero, int añoLanzamiento, string discografica)
         {
-            comando.Connection = conexion.AbrirConexion();
-            comando.CommandText = "INSERT INTO Albumes (titulo, genero, año_lanzamiento, discografica) VALUES (@titulo, @genero, @añoLanzamiento, @discografica)";
-            comando.Parameters.AddWithValue("@titulo", titulo);
-            comando.Parameters.AddWithValue("@genero", genero);
-            comando.Parameters.AddWithValue("@añoLanzamiento", añoLanzamiento);
-            comando.Parameters.AddWithValue("@discografica", discografica);
-            comando.ExecuteNonQuery();
-            comando.Parameters.Clear();
-            conexion.CerrarConexion();
+            try
+            {
+                comando.Connection = conexion.AbrirConexion();
+                comando.CommandText = "INSERT INTO Albumes (titulo, genero, año_lanzamiento, discografica) VALUES (@titulo, @genero, @añoLanzamiento, @discografica)";
+                comando.Parameters.AddWithValue("@titulo", titulo);
+                comando.Parameters.AddWithValue("@genero", genero);
+                comando.Parameters.AddWithValue("@añoLanzamiento", añoLanzamiento);
+                comando.Parameters.AddWithValue("@discografica", discografica);
+                comando.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error al guardar el álbum: " + ex.Message);
+            }
+            finally
+            {
+                comando.Parameters.Clear();
+                conexion.CerrarConexion();
+            }
         }
+
+       
+
 
         public void Editar(int album_id, string titulo, string genero, int añoLanzamiento, string discografica)
         {
