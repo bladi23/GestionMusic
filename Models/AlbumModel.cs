@@ -26,6 +26,41 @@ namespace GestionMusic.Models
             listaAlbum.Load(leer);
             conexion.CerrarConexion();
             return listaAlbum; }
+        public void Guardar(string titulo, string genero, int añoLanzamiento, string discografica)
+        {
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "INSERT INTO Albumes (titulo, genero, año_lanzamiento, discografica) VALUES (@titulo, @genero, @añoLanzamiento, @discografica)";
+            comando.Parameters.AddWithValue("@titulo", titulo);
+            comando.Parameters.AddWithValue("@genero", genero);
+            comando.Parameters.AddWithValue("@añoLanzamiento", añoLanzamiento);
+            comando.Parameters.AddWithValue("@discografica", discografica);
+            comando.ExecuteNonQuery();
+            comando.Parameters.Clear();
+            conexion.CerrarConexion();
+        }
 
+        public void Editar(int album_id, string titulo, string genero, int añoLanzamiento, string discografica)
+        {
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "UPDATE Albumes SET titulo = @titulo, genero = @genero, año_lanzamiento = @añoLanzamiento, discografica = @discografica WHERE album_id = @album_id";
+            comando.Parameters.AddWithValue("@album_id", album_id);
+            comando.Parameters.AddWithValue("@titulo", titulo);
+            comando.Parameters.AddWithValue("@genero", genero);
+            comando.Parameters.AddWithValue("@añoLanzamiento", añoLanzamiento);
+            comando.Parameters.AddWithValue("@discografica", discografica);
+            comando.ExecuteNonQuery();
+            comando.Parameters.Clear();
+            conexion.CerrarConexion();
+        }
+
+        public void Eliminar(int album_id)
+        {
+            comando.Connection = conexion.AbrirConexion();
+            comando.CommandText = "DELETE FROM Albumes WHERE album_id = @album_id";
+            comando.Parameters.AddWithValue("@album_id", album_id);
+            comando.ExecuteNonQuery();
+            comando.Parameters.Clear();
+            conexion.CerrarConexion();
+        }
     }
 }
