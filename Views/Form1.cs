@@ -41,18 +41,31 @@ namespace GestionMusic
 
         private void btn_editar_Click(object sender, EventArgs e)
         {
-            album_id = (int)lst_album.SelectedValue;
-            albumController.Editar(album_id, txt_titulo.Text, txt_genero.Text, int.Parse(txt_año.Text), txt_discografia.Text);
-            CargarListaAlbumes();
+            if (lst_album.SelectedItem != null)
+            {
+                album_id = (int)lst_album.SelectedValue;
+                albumController.Editar(album_id, txt_titulo.Text, txt_genero.Text, int.Parse(txt_año.Text), txt_discografia.Text);
+                CargarListaAlbumes();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un álbum para editar.");
+            }
         }
 
         private void btn_eliminar_Click(object sender, EventArgs e)
         {
-            album_id = (int)lst_album.SelectedValue;
-            albumController.Eliminar(album_id);
-            CargarListaAlbumes();
+            if (lst_album.SelectedItem != null)
+            {
+                album_id = (int)lst_album.SelectedValue;
+                albumController.Eliminar(album_id);
+                CargarListaAlbumes();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un álbum para eliminar.");
+            }
         }
-
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
